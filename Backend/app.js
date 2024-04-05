@@ -4,6 +4,9 @@ const app = express();
 const routes= require('./routes/index');  
 const bodyParser = require('body-parser'); // controlador de peticiones de formularios
 const path = require('path');
+const morgan = require('morgan')
+
+app.use(morgan('dev')); // cada vez que se refresque nos  muestra  mensaje por consola del tiempo en ms
 
 //el cors siempre va primero
 //para hacer que se pueda conectar con el lado del cliente

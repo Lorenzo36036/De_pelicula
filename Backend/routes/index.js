@@ -2,7 +2,10 @@ const express = require("express");
 const app = express();
 const router   = express.Router();
 const controllers = require("./../controllers/controllers");
+const mongoose = require('./../conexion/conexion')
 
+
+mongoose(); //Iniciando conexion a la base de datos mongoose 
 
 app.use(express.static('public'));
 

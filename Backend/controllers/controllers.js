@@ -1,14 +1,33 @@
+const User = require('./../models/models');
+
+
 controllers = {};
 
 
 
-controllers.registro = (req,res)=>{
- const {username, password, email} = req.body;
+controllers.registro = async (req,res)=>{ //para registrar usuario 
+ 
+ try{
+    const {username, password, email} = req.body; //recibiendo datos
 
- console.log(username, password, email)
+    const newUser = new USer(  //creando objeto usuario 
+      {
+      username, 
+      password, 
+      email
+      })
+   
+   await newUSer.save();  //guardando en la base de datos mongoDB   
+   res.send('REGISTRO EXITOSO');
+  
+ }catch(error){
+    console.log(error);
+ }
+ 
 
- res.send('REGISTRO EXITOSO');
 }
+
+
 
 controllers.login = (req,res)=>{ 
     res.send('Login exitoso');

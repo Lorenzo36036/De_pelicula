@@ -1,5 +1,5 @@
 //Esquemas o shemas para definir el tipo de datos a recibir en la  coleccion
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); //se usa para crear el esquema de la base de datos donde se almacenara los valores
 
 
 
@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
         required : true,
         trim : true //quita espacios en blanco
        },
-    Email : { 
+    email : { 
         type : String,
          required : true,
          trim : true, //quita espacios en blanco
@@ -42,7 +42,7 @@ const donacionSchema = new mongoose.Schema({
 });
 
 
- const usuario  = mongoose.model(`Usuario`, userSchema);
- const donacion = mongoose.model('Donacion',donacionSchema);
+ const Usuario  = mongoose.model(`Usuario`, userSchema);
+ const Donacion = mongoose.model('Donacion',donacionSchema);
  
- module.exports = {usuario, donacion};
+ module.exports = {Usuario, Donacion};

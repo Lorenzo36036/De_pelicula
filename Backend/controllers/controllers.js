@@ -22,26 +22,53 @@ controllers.registro = async (req,res)=>{ //para registrar usuario
       const save =  await User.save();  //guardando en la base de datos mongoDB  y pasando a variable save
       
       const token    =  await createAcessToken({id : save._id}); //creando un token con el valor return de la funcion createAccesToken 
-      res.cookie('token',token);  
+      res.cookie('token',token);  //asignando token a la cookie para que se almacena el acceso del usuario
       res.json({ 
-       messaje : "usuario creado correctamente"
+       messaje : save, 
     }) 
+
+    console.log('MI token:',token)
+ }catch(error){
+    res.status(500).json({  //Error interno del servidor". Esto significa que algo salió mal en el servidor al procesar la solicitud del cliente 
+      messaje : error.messaje
+    })
+ }
+ 
+}
+
+
+controllers.login = async (req,res)=>{ 
+   
+   const {email, password} = req.body; //recibiendo datos
+ 
+
+   try{
     
-      console.log(save)
+    const userFound = await Usuario.findOne( {email} ); //se busca el usuario a traves del correo email usando el metodo findOne cuando se encuentra el usuario les pasa todas las props a la variable !OJO! usuario es el objeto donde se asigna los atributos de la coleccion en la carpeta models escrito en  models.js 
+    
+
+    if(!userFound) return res.status(400).json( {messaje : "Email no encontrado"} ); //si no encuentra el email del usuario entonces devuelve un mensaje de no encontrado como res entonces el codigo de abajo no se ejecuta
+
+    const respuesta = await bcrypt.compare(password, userFound.password) //se compara el password  que ingreso el usuario, con el password registrado de la base de datos para verificar si es correcto !OJO! De pendiendo de la respuesta me devuelve un true de que si son iguales o un false de que no son iguales
+      
+
+    if(!respuesta) return res.status(400).json({messaje : 'password incorrect'}) //si  es false devuelve esa respeusta  por lo tanto el token de abajo no se ejecutara
+      
+      const token  =  await createAcessToken({id : userFound._id}); //creando un token con el valor return de la funcion createAccesToken 
+      res.cookie('token', token);
+      res.status(200).json({ 
+       messaje : "usuario logeado correctamente"
+       }) 
+   
       console.log('MI token:',token)
        
   
  }catch(error){
     console.log(error);
  }
- 
-
-}
 
 
 
-controllers.login = (req,res)=>{ 
-    res.send('Login exitoso');
    }
    
    

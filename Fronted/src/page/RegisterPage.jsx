@@ -12,36 +12,50 @@ console.log(errors)
 return(
      
     <div>
-     <h1>Registro</h1>
-
+     <h1 className=" text-center">Registro</h1>
+  
     <form onSubmit={handleSubmit( async data =>{ console.log(data); await registerPage(data) } )}>
-    <input type="email" {...register('email',{
+   
+    <div class="form-group">
+
+    <label for="exampleInputEmail1" className="font-weight-bold fs-5">Correo Electronico</label>   
+    <input type="email"  class="form-control border border-dark" id="exampleInputEmail1"  {...register('email',{
         required: {value:true, message:"Email es requerido"}, 
         pattern:  {value:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, message:'Email no valido'}
         
      })} placeholder="Email"/>    
-    
 
     { errors.email && <span> {errors.email.message}</span>}
-    
+    </div>
     <br/>    
-    <input type="text" {...register('usuario',{
+
+
+    <div class="form-group">
+    <label for="exampleInputUsuario" className="font-weight-bold  fs-5">Usuario</label>      
+    <input type="text"   class="form-control border border-dark" id="exampleInputUsuario"  {...register('usuario',{
         required : {value:true, message:"Nombre es requerido"},
         minLength: {value:2, message:"Lo minimo son 2 caracteres"},
         maxLength: {value:12, message:"Como maximo son 12 carecteres"}
          })}  placeholder="Usuario"/>
     
     {errors.usuario && <span>{errors.usuario.message}</span>}
-  
+    </div>
 
     <br/>
-    <input type="password" {...register('password',{required: true})} placeholder="Password" />
+
+    <div class="form-group">
+    <label for="exampleInputPassword" className="font-weight-bold  fs-5">Contrasena</label>    
+    <input type="password" class="form-control border border-dark" id="exampleInputPassword" {...register('password',{required: true})} placeholder="Password" />
     {errors.password && <span>password es requerido</span>}
-   
+     </div>
   
 
     <br/>
-    <input type="password" {...register('confirmarPassword',{
+
+
+    <div class="form-group">
+    <label for="exampleInputCPassword" className="font-weight-bold  fs-5"> confirmacion de Contrasena</label>    
+    <input type="password"  class="form-control border border-dark" id="exampleInputCPassword" {...register('confirmarPassword',{
           required :{value: true, message : "Confirmar Password es requerido"},   
            //validando que los password sean iguales con watch
           validate : (value) =>{ 
@@ -52,13 +66,14 @@ return(
             }      
         })} placeholder="confirmarPassword" /> 
     {errors.confirmarPassword && <span>{errors.confirmarPassword.message}</span>}
- 
+    </div>
 
 
     
 
     <br/>
-    <label htmlFor="fechaNacimiento">Ingresa Nacimiento </label>
+   <div class='text-center'> 
+    <label htmlFor="fechaNacimiento" className=" font-weight-bold fs-5 m-1">Ingresa Nacimiento </label>
     <input type="date" {...register('fechaNacimiento',{
         required: { value: true, message : "Ingresa tu dia/mes/año de nacimiento"},  
         
@@ -80,13 +95,19 @@ return(
     })} /> 
     
     {errors.fechaNacimiento && <span>{errors.fechaNacimiento.message}</span>}
-
+    </div>
     <br/>
-    <label htmlFor="terminos">Acepta terminos y condiciones de nuestras politicas</label>
-    <input type="checkbox" {...register('terminos',{required: true})} />
+    <div className="text-center">
+    <label   htmlFor="terminos">Acepta terminos y condiciones de nuestras politicas</label>
+    <input   type="checkbox" {...register('terminos',{required: true})} />
     {errors.terminos && <span>terminos es requerido</span>}
+    </div>
+  
     <br/>
-     <button>Registrar</button>
+   
+   <div className="text-center">
+    <button type="button " class="btn btn-primary text-center ">Registrar</button>
+    </div>
      {//muestra con watch el contenido que se ingresara por form
                                  }
      <pre>

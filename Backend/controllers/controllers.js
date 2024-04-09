@@ -36,7 +36,7 @@ controllers.registro = async (req,res)=>{ //para registrar usuario
  
 }
 
-
+//logea cuenta y le asigna el token
 controllers.login = async (req,res)=>{ 
    
    const {email, password} = req.body; //recibiendo datos
@@ -56,6 +56,7 @@ controllers.login = async (req,res)=>{
       
       const token  =  await createAcessToken({id : userFound._id}); //creando un token con el valor return de la funcion createAccesToken 
       res.cookie('token', token);
+     
       res.status(200).json({ 
        messaje : "usuario logeado correctamente"
        }) 
@@ -71,8 +72,18 @@ controllers.login = async (req,res)=>{
 
    }
    
+  
+//deslogea al usuario
+controllers.logout = async (req,res) =>{
+res.cookie('token','',{
+  expires : new Date(0)
+})
+ return res.sendStatus(200)
+
+
+}  
    
-   
+ //rutas protegidas es decir se accedera solo cuando se asigne el token en el login
 
 
 

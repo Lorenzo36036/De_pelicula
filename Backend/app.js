@@ -1,10 +1,11 @@
 const express = require('express');
-const cors = require('cors');
+const cors = require('cors'); //permite abrir el server backend para que se conecten desde el fronted
 const app = express();
 const routes= require('./routes/index');  
 const bodyParser = require('body-parser'); // controlador de peticiones de formularios
 const path = require('path');
-const morgan = require('morgan')
+const morgan = require('morgan') //se utiliza para mensaje de consolas de cuanto duro la peticion
+const cookieParse = require('cookie-parser');
 
 app.use(morgan('dev')); // cada vez que se refresque nos  muestra  mensaje por consola del tiempo en ms
 
@@ -21,8 +22,8 @@ app.set(path.join(__dirname,'/views'));// seleccionando carpeta de vista
 
 
 app.use(bodyParser.json()); //recibira informacion del navegador
-app.use(bodyParser.urlencoded({ extended: false }));//recibira informacion del formulario enviado
-                                                    //extends:false se usa para dar a entender que no se enviara imagenes o cosas complicadas en un formulario
+app.use(bodyParser.urlencoded({ extended: false }));//recibira informacion del formulario enviado  //extends:false se usa para dar a entender que no se enviara imagenes o cosas complicadas en un formulario
+app.use(cookieParse())//se usa para leer token de las cookie directamente.                                                  
 
 //usando rutas
 app.use('/api',routes);

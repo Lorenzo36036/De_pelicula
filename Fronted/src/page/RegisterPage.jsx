@@ -1,23 +1,34 @@
 import {useForm} from "react-hook-form";
 import {useAuth}   from "./../context/AuthContext"
- 
+import {useEffect}  from "react";
+import { useNavigate } from "react-router-dom";
+
+
 
 function RegisterPage(){
+
 const {register, handleSubmit, formState : {errors}, watch} = useForm(); //formState es para activar los errors, handleSubmit es una funcion para poder enviar informacion
-const {signup, user} = useAuth(); 
-console.log(errors)
+const {signup, user, isAuthenticate} = useAuth();  //exportando useAuth ya que contiene todo el contexto
+const navigation = useNavigate();
 
-let enviado = false;
+useEffect(() =>{
+   
+    if(isAuthenticate){
+        alert("YA ESTAS REGISTRADO")
+        
 
-const onSubmit = handleSubmit(  data =>{ 
+    } 
+  },[isAuthenticate])
+
+const onSubmit = handleSubmit(data =>{ 
   signup(data)
-  console.log(user)
- } )
+  alert("Registro exitoso")
+  navigation('/login');
 
-   
+ })
+
+  
 return(
-   
-   
 
     <div>
      <h1 className=" text-center">Registro</h1>

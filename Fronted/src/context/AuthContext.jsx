@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import {registerPage} from '../api/registro.js';
 
 export const authContext = createContext();
@@ -18,16 +18,17 @@ return contexto;
 export const AuthProvider = ({children}) => {
 
     const [user, setUser] = useState(null);
+    const [isAuthenticate, setIsAuthenticate] = useState(false)
 
+
+ 
    const signup = async (user) =>{
     try {
     
         const res = await registerPage(user);
         // Manejar cualquier acción adicional después de un registro exitoso, como redireccionar a otra página
         setUser(res.data);
-
-    
-
+        setIsAuthenticate(true);
     } catch (error) {
         // Manejar errores de solicitud
         console.error('Error al registrar:', error);
@@ -39,7 +40,8 @@ export const AuthProvider = ({children}) => {
     return(
     <authContext.Provider value={{
        signup,
-       user
+       user,
+       isAuthenticate //se utilizara para saber si el usuario esta autentificado 
         }}>
       {children}
 

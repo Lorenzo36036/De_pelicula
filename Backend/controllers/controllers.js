@@ -28,6 +28,9 @@ controllers.registro = async (req,res)=>{ //para registrar usuario
     }) 
 
     console.log('MI token:',token)
+ 
+    
+     
  }catch(error){
     res.status(500).json({  //Error interno del servidor". Esto significa que algo salió mal en el servidor al procesar la solicitud del cliente 
       messaje : error.messaje

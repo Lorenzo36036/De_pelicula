@@ -14,7 +14,7 @@ function PanelPage() {
     try {
       const options = {
         method: 'get',
-        url: `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=true&language=es-MX&page=${page}&sort_by=popularity.desc`,
+        url: `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=true&language=es-MX&page=${page}&sort_by=popularity.desc`,
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhODMzMTJkNGMzMDNiNTcxM2EzZGVkYjg1YjI2NTVkYyIsInN1YiI6IjY2MDgzYTRkNTkwMDg2MDE3Y2I5OGEwZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eiCHM_e5u9ytODCIFJHyW-mq2cMTyP5Z3sIx4KzMuV4'

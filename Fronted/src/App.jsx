@@ -4,6 +4,7 @@ import RegisterPage from "./page/RegisterPage";
 import LoginPage from "./page/LoginPage";
 import PanelPage from "./page/PanelPage";
 import DonacionPage from './page/DonacionPage';
+import {AuthProvider} from './context/AuthContext' //Se usara digamos como un div junto con sus hijos para que estos hijos tengan acceso a toda su informacion en este caso contexto
 
 
 function App() {
@@ -11,7 +12,10 @@ function App() {
 
   return (
     <div className='app'>
-    <BrowserRouter>
+  
+    <AuthProvider> {/* Aqui se esta viendo el uso que se leda se usa como padre y lo que heredaran son los hijos*/}
+
+    <BrowserRouter> 
      <nav className='navbar navbar-dark bg-dark' >
      <header>
       <h3 className='text-white text-focus-in'><i className="bi bi-film"></i> De Pelicula<i className="bi bi-film"></i></h3>
@@ -30,7 +34,8 @@ function App() {
      <Route path="/movimiento" element={s}></Route>
      </Routes>
     </BrowserRouter>
-
+    
+    </AuthProvider>
 
     
     

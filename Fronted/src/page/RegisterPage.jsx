@@ -1,25 +1,33 @@
 import {useForm} from "react-hook-form";
-import {registerPage} from '../api/registro.js';
-
-
+import {useAuth}   from "./../context/AuthContext"
+ 
 
 function RegisterPage(){
 const {register, handleSubmit, formState : {errors}, watch} = useForm(); //formState es para activar los errors, handleSubmit es una funcion para poder enviar informacion
-    
+const {signup, user} = useAuth(); 
 console.log(errors)
 
+let enviado = false;
 
+const onSubmit = handleSubmit(  data =>{ 
+  signup(data)
+  console.log(user)
+ } )
+
+   
 return(
-     
+   
+   
+
     <div>
      <h1 className=" text-center">Registro</h1>
   
-    <form onSubmit={handleSubmit( async data =>{ console.log(data); await registerPage(data) } )}>
+    <form onSubmit={onSubmit}>
    
-    <div class="form-group">
+    <div className="form-group">
 
-    <label for="exampleInputEmail1" className="font-weight-bold fs-5">Correo Electronico</label>   
-    <input type="email"  class="form-control border border-dark" id="exampleInputEmail1"  {...register('email',{
+    <label htmlFor="exampleInputEmail1" className="font-weight-bold fs-5">Correo Electronico</label>   
+    <input type="email"  className="form-control border border-dark" id="exampleInputEmail1"  {...register('email',{
         required: {value:true, message:"Email es requerido"}, 
         pattern:  {value:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, message:'Email no valido'}
         
@@ -30,9 +38,9 @@ return(
     <br/>    
 
 
-    <div class="form-group">
-    <label for="exampleInputUsuario" className="font-weight-bold  fs-5">Usuario</label>      
-    <input type="text"   class="form-control border border-dark" id="exampleInputUsuario"  {...register('usuario',{
+    <div className="form-group">
+    <label htmlFor="exampleInputUsuario" className="font-weight-bold  fs-5">Usuario</label>      
+    <input type="text"   className="form-control border border-dark" id="exampleInputUsuario"  {...register('usuario',{
         required : {value:true, message:"Nombre es requerido"},
         minLength: {value:2, message:"Lo minimo son 2 caracteres"},
         maxLength: {value:12, message:"Como maximo son 12 carecteres"}
@@ -43,9 +51,9 @@ return(
 
     <br/>
 
-    <div class="form-group">
-    <label for="exampleInputPassword" className="font-weight-bold  fs-5">Contrasena</label>    
-    <input type="password" class="form-control border border-dark" id="exampleInputPassword" {...register('password',{required: true})} placeholder="Password" />
+    <div className="form-group">
+    <label htmlFor="exampleInputPassword" className="font-weight-bold  fs-5">Contrasena</label>    
+    <input type="password" className="form-control border border-dark" id="exampleInputPassword" {...register('password',{required: true})} placeholder="Password" />
     {errors.password && <span>password es requerido</span>}
      </div>
   
@@ -53,9 +61,9 @@ return(
     <br/>
 
 
-    <div class="form-group">
-    <label for="exampleInputCPassword" className="font-weight-bold  fs-5"> confirmacion de Contrasena</label>    
-    <input type="password"  class="form-control border border-dark" id="exampleInputCPassword" {...register('confirmarPassword',{
+    <div className="form-group">
+    <label htmlFor="exampleInputCPassword" className="font-weight-bold  fs-5"> confirmacion de Contrasena</label>    
+    <input type="password"  className="form-control border border-dark" id="exampleInputCPassword" {...register('confirmarPassword',{
           required :{value: true, message : "Confirmar Password es requerido"},   
            //validando que los password sean iguales con watch
           validate : (value) =>{ 
@@ -72,7 +80,7 @@ return(
     
 
     <br/>
-   <div class='text-center'> 
+   <div className='text-center'> 
     <label htmlFor="fechaNacimiento" className=" font-weight-bold fs-5 m-1">Ingresa Nacimiento </label>
     <input type="date" {...register('fechaNacimiento',{
         required: { value: true, message : "Ingresa tu dia/mes/año de nacimiento"},  
@@ -106,7 +114,7 @@ return(
     <br/>
    
    <div className="text-center">
-    <button type="button " class="btn btn-primary text-center ">Registrar</button>
+    <button type="submit " className="btn btn-primary text-center ">Registrar</button>
     </div>
      {//muestra con watch el contenido que se ingresara por form
                                  }

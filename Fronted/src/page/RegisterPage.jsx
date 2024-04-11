@@ -9,7 +9,7 @@ function RegisterPage(){
 
 const {register, handleSubmit, formState : {errors}, watch} = useForm(); //formState es para activar los errors, handleSubmit es una funcion para poder enviar informacion
 const {signup, user, isAuthenticate} = useAuth();  //exportando useAuth ya que contiene todo el contexto
-const navigation = useNavigate();
+const navigation = useNavigate(); //para redirrecionar
 
 useEffect(() =>{
    
@@ -20,7 +20,7 @@ useEffect(() =>{
     } 
   },[isAuthenticate])
 
-const onSubmit = handleSubmit(data =>{ 
+const onSubmit = handleSubmit(data =>{  //hlandeSubmit se encarga de hacer un submit es decir de enviar los datos se le pasa el parametro de los datos enviados para ser manejados
   signup(data)
   alert("Registro exitoso")
   navigation('/login');
@@ -44,7 +44,7 @@ return(
         
      })} placeholder="Email"/>    
 
-    { errors.email && <span> {errors.email.message}</span>}
+    { errors.email && <span> <p className="text-danger">{errors.email.message} </p> </span>}
     </div>
     <br/>    
 
@@ -52,12 +52,12 @@ return(
     <div className="form-group">
     <label htmlFor="exampleInputUsuario" className="font-weight-bold  fs-5">Usuario</label>      
     <input type="text"   className="form-control border border-dark" id="exampleInputUsuario"  {...register('usuario',{
-        required : {value:true, message:"Nombre es requerido"},
+        required : {value:true, message:"Usuario es requerido"},
         minLength: {value:2, message:"Lo minimo son 2 caracteres"},
         maxLength: {value:12, message:"Como maximo son 12 carecteres"}
          })}  placeholder="Usuario"/>
     
-    {errors.usuario && <span>{errors.usuario.message}</span>}
+    {errors.usuario && <span><p className="text-danger"> {errors.usuario.message} </p> </span>}
     </div>
 
     <br/>
@@ -65,7 +65,7 @@ return(
     <div className="form-group">
     <label htmlFor="exampleInputPassword" className="font-weight-bold  fs-5">Contrasena</label>    
     <input type="password" className="form-control border border-dark" id="exampleInputPassword" {...register('password',{required: true})} placeholder="Password" />
-    {errors.password && <span>password es requerido</span>}
+    {errors.password && <span> <p className="text-danger">password es requerido </p></span>}
      </div>
   
 
@@ -84,7 +84,7 @@ return(
                 return 'Los password no coinciden'}
             }      
         })} placeholder="confirmarPassword" /> 
-    {errors.confirmarPassword && <span>{errors.confirmarPassword.message}</span>}
+    {errors.confirmarPassword && <span> <p className="text-danger">{errors.confirmarPassword.message}  </p>  </span>}
     </div>
 
 
@@ -113,19 +113,19 @@ return(
         }
     })} /> 
     
-    {errors.fechaNacimiento && <span>{errors.fechaNacimiento.message}</span>}
+    {errors.fechaNacimiento && <span> <p className="className text-danger"> {errors.fechaNacimiento.message}</p> </span>}
     </div>
     <br/>
     <div className="text-center">
     <label   htmlFor="terminos">Acepta terminos y condiciones de nuestras politicas</label>
     <input   type="checkbox" {...register('terminos',{required: true})} />
-    {errors.terminos && <span>terminos es requerido</span>}
+    {errors.terminos && <span className="text-danger">terminos es requerido</span>}
     </div>
   
     <br/>
    
    <div className="text-center">
-    <button type="submit " className="btn btn-primary text-center ">Registrar</button>
+    <button type="submit " className="btn btn-primary text-center form-control mt-4">Registrar</button>
     </div>
      {//muestra con watch el contenido que se ingresara por form
                                  }

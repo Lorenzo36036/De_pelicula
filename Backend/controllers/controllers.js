@@ -10,6 +10,9 @@ controllers.registro = async (req,res)=>{ //para registrar usuario
    const {usuario, email, password} = req.body; //recibiendo datos
  
    try{
+    const res = await Usuario.findOne({email})
+  if(res) return res.status(400).json(["email esta registrado"])
+
      passwordHash = await bcrypt.hash(password, 10) //encriptando el password   
 
     const User = new Usuario(  //creando objeto usuario 

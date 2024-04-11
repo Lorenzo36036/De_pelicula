@@ -2,7 +2,7 @@ import {useForm} from "react-hook-form";
 import {useAuth}   from "./../context/AuthContext"
 import {useEffect}  from "react";
 import { useNavigate } from "react-router-dom";
-
+import Boton from "../components/Boton";
 
 
 function RegisterPage(){
@@ -125,7 +125,7 @@ return(
     <br/>
    
    <div className="text-center">
-    <button type="submit " className="btn btn-primary text-center form-control mt-4">Registrar</button>
+   <Boton type="submit" contenido="Registrar"  /> 
     </div>
      {//muestra con watch el contenido que se ingresara por form
                                  }

@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form";
-
+import Boton from "./../components/Boton"
 
 function LoginPage(){
 const {register, handleSubmit} = useForm();
@@ -22,7 +22,7 @@ return(
    
   
            <div className="text-center">
-            <button type="submit " className="btn btn-primary text-center form-control mt-4"> Login</button>
+             <Boton type="submit" contenido="Login"  /> 
            </div>
     </form>
 

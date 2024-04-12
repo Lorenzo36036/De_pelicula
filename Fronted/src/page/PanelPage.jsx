@@ -3,11 +3,22 @@ import axios from 'axios';
 import Pagination from 'react-bootstrap/Pagination';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import {useAuth}   from "./../context/AuthContext"
+import { useNavigate } from 'react-router-dom';
 
 function PanelPage() {
   const [pelicula, setPelicula] = useState([]);
   const [itemPage, setItemPage] = useState([]);
   const [loading, setLoading] = useState(null);
+  const {isAuthenticate} = useAuth();  
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+   if(!isAuthenticate){
+   alert("Debes iniciar secion primero por favor :D")
+   navigate('/login'); // Redirigir a la página de inicio de sesión
+   }   
+  }
 
   const getList = async (page) => {
     setLoading(true); // Establecer estado de carga a true
@@ -64,7 +75,8 @@ function PanelPage() {
                       {movie.overview === '' ? 'Descripción no disponible' : movie.overview}
                   </Card.Text>
                   <div className='text-center'>
-                      <Button variant="primary">VER MAS</Button>
+                       
+                      <Button variant="primary" onClick={handleClick}>VER MAS</Button>
                   </div>
               </Card.Body>
           </Card>

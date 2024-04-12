@@ -1,20 +1,25 @@
 import Boton from "./../components/Boton";
 import {useForm}  from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
+import { Link } from 'react-router-dom';
+
 
 function LoginPage() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const {signin, user} = useAuth();
+  const {signin, user, isAuthenticate} = useAuth();
 
   
-  const onSubmit = handleSubmit(data => {
-   try{   
-   signin(data);
-    console.log(user)
-  }catch(error){
-    console.log(error);
-  }
+  const onSubmit = handleSubmit(async data => {
+    try {
+      await signin(data);
+
+    } catch(error) {
+      console.log(error);
+    }
   });
+
+  
 
   
   return (
@@ -49,9 +54,11 @@ function LoginPage() {
         </div>
 
         <div className="text-center">
+        <p className="m-2 fs-bold-weight">No tienes cuenta? <span className="text-decoration-underline"> <Link to='/registro'> <h6>Registro</h6>  </Link>   </span> </p>
           <Boton type="submit" contenido="Login" />
         </div>
       </form>
+     
     </div>
   );
 }

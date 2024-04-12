@@ -7,11 +7,13 @@ controllers = {};
 
 
 controllers.registro = async (req,res)=>{ //para registrar usuario 
+
    const {usuario, email, password} = req.body; //recibiendo datos
  
    try{
     const res = await Usuario.findOne({email})
-  if(res) return res.status(400).json(["email esta registrado"])
+  
+    if(res) return res.status(400).json(["email esta registrado"])
 
      passwordHash = await bcrypt.hash(password, 10) //encriptando el password   
 
@@ -46,7 +48,7 @@ controllers.registro = async (req,res)=>{ //para registrar usuario
 controllers.login = async (req,res)=>{ 
    
    const {email, password} = req.body; //recibiendo datos
- 
+   let validacion = false;
 
    try{
     
@@ -61,6 +63,7 @@ controllers.login = async (req,res)=>{
     if(!respuesta) return res.status(400).json({messaje : 'password incorrect'}) //si  es false devuelve esa respeusta  por lo tanto el token de abajo no se ejecutara
       
       const token  =  await createAcessToken({id : userFound._id}); //creando un token con el valor return de la funcion createAccesToken 
+     
       res.cookie('token', token);
      
       res.status(200).json({ 
@@ -69,12 +72,10 @@ controllers.login = async (req,res)=>{
    
       console.log('MI token:',token)
        
-  
+     validacion = true;
  }catch(error){
     console.log(error);
  }
-
-
 
    }
    

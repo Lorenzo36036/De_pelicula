@@ -8,21 +8,14 @@ import Boton from "../components/Boton";
 function RegisterPage(){
 
 const {register, handleSubmit, formState : {errors}, watch} = useForm(); //formState es para activar los errors, handleSubmit es una funcion para poder enviar informacion
-const {signup, user, isAuthenticate} = useAuth();  //exportando useAuth ya que contiene todo el contexto
+const {signup} = useAuth();  //exportando useAuth ya que contiene todo el contexto
 const navigation = useNavigate(); //para redirrecionar
 
-useEffect(() =>{
-   
-    if(isAuthenticate){
-        alert("Registro exitoso")
-        
-
-    } 
-  },[isAuthenticate])
 
 const onSubmit = handleSubmit(data =>{  //hlandeSubmit se encarga de hacer un submit es decir de enviar los datos se le pasa el parametro de los datos enviados para ser manejados
   signup(data)
   console.log(data)
+  alert("Registro Exitoso enviando al Login :D")
   navigation('/login');
  })
 

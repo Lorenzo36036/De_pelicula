@@ -14,7 +14,7 @@ const navigation = useNavigate(); //para redirrecionar
 useEffect(() =>{
    
     if(isAuthenticate){
-        alert("YA ESTAS REGISTRADO")
+        alert("Registro exitoso")
         
 
     } 
@@ -22,9 +22,8 @@ useEffect(() =>{
 
 const onSubmit = handleSubmit(data =>{  //hlandeSubmit se encarga de hacer un submit es decir de enviar los datos se le pasa el parametro de los datos enviados para ser manejados
   signup(data)
-  alert("Registro exitoso")
+  console.log(data)
   navigation('/login');
-
  })
 
   
@@ -64,8 +63,13 @@ return(
 
     <div className="form-group">
     <label htmlFor="exampleInputPassword" className="font-weight-bold  fs-5">Contrasena</label>    
-    <input type="password" className="form-control border border-dark" id="exampleInputPassword" {...register('password',{required: true})} placeholder="Password" />
-    {errors.password && <span> <p className="text-danger">password es requerido </p></span>}
+    <input type="password" className="form-control border border-dark" id="exampleInputPassword" {...register('password',{
+        required  : {value : true, message : "password es requerido"},
+        minLength : {value : 2, message : "Lo Minimo son 2 caracteres"},
+        maxLength : {value : 12, message : "Lo maximo son 12 caracteres"} 
+        
+        })} placeholder="Password" />
+    {errors.password && <span> <p className="text-danger"> {errors.password.message}  </p></span>}
      </div>
   
 
@@ -73,7 +77,7 @@ return(
 
 
     <div className="form-group">
-    <label htmlFor="exampleInputCPassword" className="font-weight-bold  fs-5"> confirmacion de Contrasena</label>    
+    <label htmlFor="exampleInputCPassword" className="font-weight-bold  fs-5"> Confirmacion de Contrasena</label>    
     <input type="password"  className="form-control border border-dark" id="exampleInputCPassword" {...register('confirmarPassword',{
           required :{value: true, message : "Confirmar Password es requerido"},   
            //validando que los password sean iguales con watch

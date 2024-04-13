@@ -56,8 +56,8 @@ export const AuthProvider = ({children}) => { //aqui adentro hiran todo lo que s
 
    useEffect(() =>{
       const cookie = Cookie.get(); //obtiene los datos almacenado en la cookie en este caso es el token del usuario 
-     if(cookie.token){
-      console.log("entre")
+      
+      if(cookie.token){
       setIsAuthenticate(true);
     }
 

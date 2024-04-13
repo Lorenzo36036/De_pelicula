@@ -98,11 +98,11 @@ controllers.verifyToken = async (req,res) =>{
 
  if(!cookie) return res.status(401).json({message : "No autorizado" } )
  
- jwt.verify(token, TOKEN_SECRET, async (err, Usuario) =>{
+ jwt.verify(token, TOKEN_SECRET, async (err, usuario) =>{
    
    if(err) return res.status(401).json({ message : "No autorizado" })
  
-   const userFound = await Usuario.findById();
+   const userFound = await Usuario.findById(usuario.id);
   
    if(!userFound) return res.status(401).json({ mesagge : "No autorizado"})
 

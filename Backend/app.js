@@ -12,7 +12,8 @@ app.use(morgan('dev')); // cada vez que se refresque nos  muestra  mensaje por c
 //el cors siempre va primero
 //para hacer que se pueda conectar con el lado del cliente
 app.use(cors({
-    origin: 'http://localhost:5000' // Permitir peticiones desde este origen
+    origin: 'http://localhost:5000', // Permitir peticiones desde este origen
+    credentials : true
   }));
   
 

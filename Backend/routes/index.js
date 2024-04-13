@@ -30,6 +30,8 @@ router.post('/login',controllers.login)
 router.post('/logout',controllers.logout)
 
 
+router.get('/verify',controllers.verifyToken)
+
 
 router.get("/profile",authRequire , async (req,res)=>{
     

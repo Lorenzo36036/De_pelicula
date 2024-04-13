@@ -1,7 +1,8 @@
 const {Usuario} = require('./../models/models');
 const bcrypt = require('bcrypt'); //encriptador
 const createAcessToken = require('../libs/jwt') //usando la variable donde se asignara el TOKEN
-
+const jwt = require("jsonwebtoken");
+const TOKEN_SECRET = require('./../config')
 controllers = {};
 
 
@@ -24,12 +25,12 @@ controllers.registro = async (req,res)=>{ //para registrar usuario
       password : passwordHash //pasando el hash encriptado al password 
       })
    
-      const save =  await User.save();  //guardando en la base de datos mongoDB  y pasando a variable save
+      const Userfound =  await User.save();  //guardando en la base de datos mongoDB  y pasando a variable save
       
-      const token    =  await createAcessToken({id : save._id}); //creando un token con el valor return de la funcion createAccesToken 
+      const token    =  await createAcessToken({id : Userfound._id}); //creando un token con el valor return de la funcion createAccesToken 
       res.cookie('token',token);  //asignando token a la cookie para que se almacena el acceso del usuario
-      res.json({ 
-       messaje : save, 
+      res.status(200).json({ 
+       messaje : user, 
     }) 
 
     console.log('MI token:',token)
@@ -48,7 +49,7 @@ controllers.registro = async (req,res)=>{ //para registrar usuario
 controllers.login = async (req,res)=>{ 
    
    const {email, password} = req.body; //recibiendo datos
-   let validacion = false;
+   
 
    try{
     
@@ -72,7 +73,7 @@ controllers.login = async (req,res)=>{
    
       console.log('MI token:',token)
        
-     validacion = true;
+     
  }catch(error){
     console.log(error);
  }
@@ -90,7 +91,31 @@ res.cookie('token','',{
 
 }  
    
- //rutas protegidas es decir se accedera solo cuando se asigne el token en el login
+
+
+controllers.verifyToken = async (req,res) =>{
+  const {token} =  req.cookie()
+
+ if(!cookie) return res.status(401).json({message : "No autorizado" } )
+ 
+ jwt.verify(token, TOKEN_SECRET, async (err, Usuario) =>{
+   
+   if(err) return res.status(401).json({ message : "No autorizado" })
+ 
+   const userFound = await Usuario.findById();
+  
+   if(!userFound) return res.status(401).json({ mesagge : "No autorizado"})
+
+  return res.json({
+  id : userFound._id,
+  username: userFound.usuario,
+  email : Userfound.email
+ })
+
+}
+ )
+
+}
 
 
 

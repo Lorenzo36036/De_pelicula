@@ -1,10 +1,15 @@
-import axios from 'axios'
+import axios from 'axios';
+
+// Creamos una instancia de Axios con la configuración base
+const instance = axios.create({
+  baseURL: 'http://localhost:4000/api',
+  withCredentials: true //permite acceso a las cabeceras es decir permite que se pueda ver los tokens y todo eso 
+});
+
+// Exportamos las funciones para registrar y hacer login
+export const registerPage = user => instance.post(`/register`, user);
+
+export const loginPage = user => instance.post(`/login`, user);
 
 
-const API = 'http://localhost:4000/api';
-
-export const registerPage = user => axios.post(`${API}/register`, user); //el parametro user es lo que se pasara en  req.body 
-
-export const loginPage = user => axios.post(`${API}/login`, user)//pasando el enlace donde el usuario hara login y recibiendo sus datos usando user
- 
-
+// export const verifiTokenRequest = user => instance.get('/verify', user)

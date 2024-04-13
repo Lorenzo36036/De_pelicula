@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import {registerPage, loginPage} from '../api/auth.js';
-
+import Cookie from 'js-cookie' //esto permite leer las cookie de las cabecera
 
 export const authContext = createContext();
  
@@ -39,23 +39,32 @@ export const AuthProvider = ({children}) => { //aqui adentro hiran todo lo que s
   
    const signin = async (user) => { //para logear a los usuarios 
       try{
+
         const res = await loginPage(user);
-       
-        console.log(res)
+    
        
         if (res.status === 200) {
-          setIsAuthenticate(true);
           alert("¡Inicio de sesión exitoso!");
         } 
   
-       
     }catch(error){
-
-           alert("Email o Password incorrectos")
+            alert("Email o Password incorrectos")
             console.log(error)
       }
     }
   
+
+   useEffect(() =>{
+      const cookie = Cookie.get(); //obtiene los datos almacenado en la cookie en este caso es el token del usuario 
+     if(cookie.token){
+      console.log("entre")
+      setIsAuthenticate(true);
+    }
+
+    
+   },[])
+
+
 
     return(
       //En "value" van todas las funciones o variables que se exportaran para usarse  

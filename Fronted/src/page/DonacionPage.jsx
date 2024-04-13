@@ -1,9 +1,6 @@
 import {useForm} from "react-hook-form";
 
 
-
-
-
 function DonacionPage(){
    
  const {register, handleSubmit, formState : {errors}, watch} = useForm(); //formState es para activar los errors, handleSubmit es una funcion para poder enviar informacion

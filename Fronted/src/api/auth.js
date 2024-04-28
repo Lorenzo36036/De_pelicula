@@ -12,4 +12,4 @@ export const registerPage = user => instance.post(`/register`, user);
 export const loginPage = user => instance.post(`/login`, user);
 
 
-// export const verifiTokenRequest = user => instance.get('/verify', user)
+export const verifiTokenRequest = () => instance.get('/verify')

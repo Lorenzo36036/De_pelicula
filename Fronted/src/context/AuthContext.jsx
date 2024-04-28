@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import {registerPage, loginPage} from '../api/auth.js';
+import {registerPage, loginPage, verifiTokenRequest} from '../api/auth.js';
 import Cookie from 'js-cookie' //esto permite leer las cookie de las cabecera
 
 export const authContext = createContext();
@@ -21,7 +21,7 @@ export const AuthProvider = ({children}) => { //aqui adentro hiran todo lo que s
 
     const [user, setUser] = useState(null); //esto se usara para almacenar la informacion para mostrar solo en fronted y el user se pasara en el contexto si es de usarlo para mostrar la informacion
     const [isAuthenticate, setIsAuthenticate] = useState(false) //esto solo almacenara valor bool si el usuario se registro se lo pasara a la variable con esto podemos hacer validaciones y la variable isAuthenticate se pasa como true
-
+    const [loading, setLoading] = useState(true)
 
  
    const signup = async (user) =>{ //ESTO ES PARA EL REGISTRO DEL USUARIO PARA GUARDARLO 
@@ -40,7 +40,7 @@ export const AuthProvider = ({children}) => { //aqui adentro hiran todo lo que s
    const signin = async (user) => { //para logear a los usuarios 
       try{
 
-        const res = await loginPage(user);
+        const res = await loginPage(user); //!IMPORTANTE! AQUI es donde asigno el token cuando se hace el login
     
        
         if (res.status === 200) {
@@ -54,23 +54,45 @@ export const AuthProvider = ({children}) => { //aqui adentro hiran todo lo que s
     }
   
 
-   useEffect(() =>{
-      const cookie = Cookie.get(); //obtiene los datos almacenado en la cookie en este caso es el token del usuario 
+    useEffect(() => {
+      async function checkLogin() {
+        const token = Cookie.get('token'); // Obtén el valor de la cookie llamada "token"
+        
+        if (token) {
+          console.log('entre');
+          
+          try {
+            const res = await verifiTokenRequest(token);
+            
+            if (res.status === 200) {
+              console.log(res)
+              setIsAuthenticate(true);
+              setUser(res.data);
+              setLoading(false)
+            } else {
+              setIsAuthenticate(false);
+              setUser(null);
+              setLoading(false)
+            }
+          } catch (error) {
+            console.error('Error al verificar el token:', error);
+            setIsAuthenticate(false);
+            setUser(null);
+            setLoading(false)
+          }
+        
+        } 
+      }
       
-      if(cookie.token){
-      setIsAuthenticate(true);
-    }
-
-    
-   },[])
-
-
+      checkLogin();
+    }, []);
 
     return(
       //En "value" van todas las funciones o variables que se exportaran para usarse  
     <authContext.Provider value={{ 
        signup,
        user,
+       loading,
        isAuthenticate, //se utilizara para saber si el usuario esta autentificado 
        signin }}>
       {children}

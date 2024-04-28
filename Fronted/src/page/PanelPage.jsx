@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import {useAuth}   from "./../context/AuthContext"
 import { useNavigate } from 'react-router-dom';
+import Modal from 'react-bootstrap/Modal';
 
 function PanelPage() {
   const [pelicula, setPelicula] = useState([]);
@@ -14,7 +15,7 @@ function PanelPage() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-   if(!isAuthenticate){
+   if(!isAuthenticate && !loading ){
    alert("Debes iniciar secion primero por favor :D")
    navigate('/login'); // Redirigir a la página de inicio de sesión
    }   
@@ -76,7 +77,10 @@ function PanelPage() {
                   </Card.Text>
                   <div className='text-center'>
                        
-                      <Button variant="primary" onClick={handleClick}>VER MAS</Button>
+                      <Button variant="primary" onClick={()=>{handleClick
+                       
+                      
+                               } }>VER TRAILER</Button>
                   </div>
               </Card.Body>
           </Card>

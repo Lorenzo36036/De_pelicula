@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt'); //encriptador
 const createAcessToken = require('../libs/jwt') //usando la variable donde se asignara el TOKEN
 const jwt = require("jsonwebtoken");
 const TOKEN_SECRET = require('./../config')
+
+
 controllers = {};
 
 
@@ -93,28 +95,24 @@ res.cookie('token','',{
    
 
 
-controllers.verifyToken = async (req,res) =>{
-  const {token} =  req.cookie()
+controllers.verifyToken = async (req, res) => {
+  const token = req.cookies.token; // Obtener el valor de la cookie solo "token" Importante el cookies se usa por que se exporto en app.js como cookie-parser
 
- if(!cookie) return res.status(401).json({message : "No autorizado" } )
- 
- jwt.verify(token, TOKEN_SECRET, async (err, usuario) =>{
-   
-   if(err) return res.status(401).json({ message : "No autorizado" })
- 
-   const userFound = await Usuario.findById(usuario.id);
-  
-   if(!userFound) return res.status(401).json({ mesagge : "No autorizado"})
+  if (!token) return res.status(401).json({ message: "No autorizado" });
 
-  return res.json({
-  id : userFound._id,
-  username: userFound.usuario,
-  email : Userfound.email
- })
+  jwt.verify(token, TOKEN_SECRET, async (err, usuario) => {
+    if (err) return res.status(401).json({ message: "No autorizado" });
 
-}
- )
+    const userFound = await Usuario.findById(usuario.id); // Buscar al usuario por su ID
 
+    if (!userFound) return res.status(401).json({ message: "No autorizado" });
+
+    return res.json({
+      id: userFound._id,
+      username: userFound.usuario,
+      email: userFound.email
+    });
+  });
 }
 
 

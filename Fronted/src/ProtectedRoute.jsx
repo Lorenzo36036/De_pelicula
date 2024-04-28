@@ -6,10 +6,9 @@ import Cookie from 'js-cookie'
 
 function ProtectedRoute() {
   
-   const {isAuthenticate} = useAuth(); // Corregida la desestructuración del array
-   const cookie = Cookie.get(); 
- 
-   if (!cookie.token){
+   const {isAuthenticate, loading} = useAuth(); // Corregida la desestructuración del array
+   
+   if (!loading && !isAuthenticate){
    alert("Debes iniciar secion primero por favor :D");
    return  <Navigate to="/login" replace />;
   } 

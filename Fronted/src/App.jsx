@@ -29,6 +29,7 @@ function App() {
      <Link className='link .text-focus-in'   to='/movimiento'><i className="bi bi-bank"></i>Movimientos</Link>
      <Link className='link .text-focus-in'   to='/registro' >Registro</Link>
      <Link className='link .text-focus-in'   to='/login' >Login</Link> 
+     <Link className='link .text-focus-in'   to='/' >Cerrar Seccion</Link> 
      </header>
      </nav>
      

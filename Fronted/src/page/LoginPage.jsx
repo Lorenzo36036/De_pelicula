@@ -1,13 +1,13 @@
 import Boton from "./../components/Boton";
 import {useForm}  from "react-hook-form";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext"; //aqui es donde comparto las variables compartidas del backend
 import { useEffect } from "react";
 import { Link } from 'react-router-dom';
 
 
 function LoginPage() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const {signin, user, isAuthenticate} = useAuth();
+  const {signin, user, isAuthenticate} = useAuth(); 
 
   
   const onSubmit = handleSubmit(async data => {
